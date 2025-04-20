@@ -1,0 +1,172 @@
+<h2 mat-dialog-title>
+  {{ isEditMode ? "Modifier le logement" : "Nouveau logement" }}
+</h2>
+
+<form [formGroup]="logementForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Référence</mat-label>
+        <input matInput formControlName="reference" />
+        <mat-error *ngIf="logementForm.get('reference')?.hasError('required')">
+          La référence est requise
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Type</mat-label>
+        <mat-select formControlName="type">
+          <mat-option *ngFor="let type of types" [value]="type">
+            {{ type }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="logementForm.get('type')?.hasError('required')">
+          Le type est requis
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Surface (m²)</mat-label>
+        <input matInput type="number" formControlName="surface" min="0" />
+        <mat-error *ngIf="logementForm.get('surface')?.hasError('required')">
+          La surface est requise
+        </mat-error>
+        <mat-error *ngIf="logementForm.get('surface')?.hasError('min')">
+          La surface doit être positive
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Prix</mat-label>
+        <input matInput type="number" formControlName="prix" min="0" />
+        <mat-error *ngIf="logementForm.get('prix')?.hasError('required')">
+          Le prix est requis
+        </mat-error>
+        <mat-error *ngIf="logementForm.get('prix')?.hasError('min')">
+          Le prix doit être positif
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Adresse</mat-label>
+      <textarea matInput formControlName="adresse" rows="2"></textarea>
+      <mat-error *ngIf="logementForm.get('adresse')?.hasError('required')">
+        L'adresse est requise
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" rows="3"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Statut</mat-label>
+      <mat-select formControlName="statut">
+        <mat-option *ngFor="let statut of statuts" [value]="statut">
+          {{ statut }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="logementForm.get('statut')?.hasError('required')">
+        Le statut est requis
+      </mat-error>
+    </mat-form-field>
+
+    <div formGroupName="caracteristiques" class="caracteristiques-section">
+      <h3>Caractéristiques</h3>
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Pièces</mat-label>
+          <input matInput type="number" formControlName="pieces" min="0" />
+          <mat-error
+            *ngIf="
+              logementForm.get('caracteristiques.pieces')?.hasError('required')
+            "
+          >
+            Le nombre de pièces est requis
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Chambres</mat-label>
+          <input matInput type="number" formControlName="chambres" min="0" />
+          <mat-error
+            *ngIf="
+              logementForm
+                .get('caracteristiques.chambres')
+                ?.hasError('required')
+            "
+          >
+            Le nombre de chambres est requis
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Salles de bain</mat-label>
+          <input matInput type="number" formControlName="sdb" min="0" />
+          <mat-error
+            *ngIf="
+              logementForm.get('caracteristiques.sdb')?.hasError('required')
+            "
+          >
+            Le nombre de salles de bain est requis
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="checkbox-group">
+        <mat-checkbox formControlName="balcon">Balcon</mat-checkbox>
+        <mat-checkbox formControlName="jardin">Jardin</mat-checkbox>
+        <mat-checkbox formControlName="parking">Parking</mat-checkbox>
+        <mat-checkbox formControlName="ascenseur">Ascenseur</mat-checkbox>
+      </div>
+    </div>
+
+    <div class="equipements-section">
+      <h3>Équipements</h3>
+      <div formArrayName="equipements">
+        <div
+          *ngFor="let equipement of equipements.controls; let i = index"
+          class="equipement-row"
+        >
+          <mat-form-field appearance="outline">
+            <mat-label>Équipement {{ i + 1 }}</mat-label>
+            <input matInput [formControlName]="i" />
+          </mat-form-field>
+          <button
+            mat-icon-button
+            color="warn"
+            (click)="removeEquipement(i)"
+            type="button"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+      <button
+        mat-button
+        type="button"
+        (click)="addEquipement()"
+        class="add-equipement-btn"
+      >
+        <mat-icon>add</mat-icon>
+        Ajouter un équipement
+      </button>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="onCancel()">Annuler</button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!logementForm.valid || isLoading"
+    >
+      {{ isEditMode ? "Mettre à jour" : "Créer" }}
+    </button>
+  </mat-dialog-actions>
+</form>

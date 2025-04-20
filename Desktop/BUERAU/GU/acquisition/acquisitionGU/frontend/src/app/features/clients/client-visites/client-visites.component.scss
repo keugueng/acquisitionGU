@@ -1,0 +1,66 @@
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h2 {
+      margin: 0;
+      color: #333;
+    }
+  }
+
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  table {
+    width: 100%;
+    margin-bottom: 20px;
+
+    th.mat-header-cell {
+      background-color: #f5f5f5;
+      color: #333;
+      font-weight: bold;
+    }
+
+    td.mat-cell {
+      padding: 12px 8px;
+    }
+
+    tr.mat-row:hover {
+      background-color: #f8f9fa;
+    }
+  }
+
+  .mat-column-actions {
+    width: 120px;
+    text-align: center;
+  }
+
+  .mat-column-dateVisite {
+    width: 120px;
+  }
+
+  .mat-column-logementId {
+    width: 100px;
+  }
+
+  .mat-column-interessePar {
+    width: 150px;
+  }
+
+  .mat-column-raisonRefus {
+    width: 200px;
+  }
+
+  .mat-column-observations {
+    min-width: 200px;
+  }
+}

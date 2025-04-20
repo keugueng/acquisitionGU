@@ -1,0 +1,47 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Acquisition GU</span>
+  <span class="spacer"></span>
+  <button mat-icon-button [matMenuTriggerFor]="userMenu">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+      <span>Déconnexion</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side" opened>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/clients" routerLinkActive="active">
+        <mat-icon matListItemIcon>people</mat-icon>
+        <span matListItemTitle>Clients</span>
+      </a>
+      <a mat-list-item routerLink="/guichets" routerLinkActive="active">
+        <mat-icon matListItemIcon>account_balance</mat-icon>
+        <span matListItemTitle>Liste guichet</span>
+      </a>
+      <a mat-list-item routerLink="/dossiers" routerLinkActive="active">
+        <mat-icon matListItemIcon>folder</mat-icon>
+        <span matListItemTitle>Dossiers</span>
+      </a>
+      <a mat-list-item routerLink="/visites" routerLinkActive="active">
+        <mat-icon matListItemIcon>event</mat-icon>
+        <span matListItemTitle>Visites</span>
+      </a>
+      <a mat-list-item routerLink="/rapports" routerLinkActive="active">
+        <mat-icon matListItemIcon>assessment</mat-icon>
+        <span matListItemTitle>Rapports</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,136 @@
+<div class="container" *ngIf="!isLoading">
+  <div class="header">
+    <div class="title-section">
+      <button mat-icon-button (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <h2>Détails du Logement</h2>
+    </div>
+    <div class="actions">
+      <button mat-raised-button color="primary" (click)="editLogement()">
+        <mat-icon>edit</mat-icon>
+        Modifier
+      </button>
+      <button mat-raised-button color="warn" (click)="deleteLogement()">
+        <mat-icon>delete</mat-icon>
+        Supprimer
+      </button>
+    </div>
+  </div>
+
+  <div class="content" *ngIf="logement">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ logement.reference }}</mat-card-title>
+        <mat-card-subtitle>{{ logement.type }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="info-grid">
+          <div class="info-section">
+            <h3>Informations générales</h3>
+            <div class="info-row">
+              <span class="label">Surface:</span>
+              <span class="value">{{ logement.surface }} m²</span>
+            </div>
+            <div class="info-row">
+              <span class="label">Prix:</span>
+              <span class="value"
+                >{{ logement.prix | number : "1.2-2" }} €</span
+              >
+            </div>
+            <div class="info-row">
+              <span class="label">Statut:</span>
+              <span class="value">
+                <mat-chip-listbox>
+                  <mat-chip
+                    [color]="
+                      logement.statut === 'Disponible' ? 'primary' : 'warn'
+                    "
+                    selected
+                  >
+                    {{ logement.statut }}
+                  </mat-chip>
+                </mat-chip-listbox>
+              </span>
+            </div>
+          </div>
+
+          <div class="info-section">
+            <h3>Adresse</h3>
+            <p>{{ logement.adresse }}</p>
+          </div>
+
+          <div class="info-section">
+            <h3>Description</h3>
+            <p>{{ logement.description || "Aucune description disponible" }}</p>
+          </div>
+
+          <div class="info-section">
+            <h3>Caractéristiques</h3>
+            <div class="info-row">
+              <span class="label">Pièces:</span>
+              <span class="value">{{
+                logement.caracteristiques?.pieces || "Non spécifié"
+              }}</span>
+            </div>
+            <div class="info-row">
+              <span class="label">Chambres:</span>
+              <span class="value">{{
+                logement.caracteristiques?.chambres || "Non spécifié"
+              }}</span>
+            </div>
+            <div class="info-row">
+              <span class="label">Salles de bain:</span>
+              <span class="value">{{
+                logement.caracteristiques?.sdb || "Non spécifié"
+              }}</span>
+            </div>
+            <div class="features-grid">
+              <mat-chip-listbox>
+                <mat-chip
+                  *ngIf="logement.caracteristiques?.balcon"
+                  color="primary"
+                  selected
+                >
+                  Balcon
+                </mat-chip>
+                <mat-chip
+                  *ngIf="logement.caracteristiques?.jardin"
+                  color="primary"
+                  selected
+                >
+                  Jardin
+                </mat-chip>
+                <mat-chip
+                  *ngIf="logement.caracteristiques?.parking"
+                  color="primary"
+                  selected
+                >
+                  Parking
+                </mat-chip>
+              </mat-chip-listbox>
+            </div>
+          </div>
+
+          <div class="info-section" *ngIf="logement.equipements?.length">
+            <h3>Équipements</h3>
+            <mat-chip-listbox>
+              <mat-chip
+                *ngFor="let equipement of logement.equipements"
+                color="accent"
+                selected
+              >
+                {{ equipement }}
+              </mat-chip>
+            </mat-chip-listbox>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<div class="loading-spinner" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>

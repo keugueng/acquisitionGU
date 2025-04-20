@@ -1,0 +1,106 @@
+<div class="clients-container">
+  <div class="header">
+    <h1>Gestion des Clients</h1>
+    <button mat-raised-button color="primary" (click)="openClientForm()">
+      <mat-icon>add</mat-icon>
+      Nouveau client
+    </button>
+  </div>
+
+  <mat-form-field class="filter-field">
+    <mat-label>Filtrer</mat-label>
+    <input
+      matInput
+      (keyup)="applyFilter($event)"
+      placeholder="Ex. John"
+      #input
+    />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <!-- Nom Column -->
+      <ng-container matColumnDef="nom">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nom</th>
+        <td mat-cell *matCellDef="let client">{{ client.nom }}</td>
+      </ng-container>
+
+      <!-- Prénom Column -->
+      <ng-container matColumnDef="prenom">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Prénom</th>
+        <td mat-cell *matCellDef="let client">{{ client.prenom }}</td>
+      </ng-container>
+
+      <!-- Email Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+        <td mat-cell *matCellDef="let client">{{ client.email }}</td>
+      </ng-container>
+
+      <!-- Téléphone Column -->
+      <ng-container matColumnDef="telephone">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Téléphone</th>
+        <td mat-cell *matCellDef="let client">{{ client.telephone }}</td>
+      </ng-container>
+
+      <!-- Situation Matrimoniale Column -->
+      <ng-container matColumnDef="situation_matrimoniale">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Situation</th>
+        <td mat-cell *matCellDef="let client">
+          {{ client.situation_matrimoniale }}
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let client">
+          <button
+            mat-icon-button
+            [matMenuTriggerFor]="menu"
+            aria-label="Actions du client"
+          >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="viewClient(client.id!)">
+              <mat-icon color="primary">visibility</mat-icon>
+              <span>Voir les détails</span>
+            </button>
+            <button mat-menu-item (click)="openClientForm(client)">
+              <mat-icon>edit</mat-icon>
+              Modifier
+            </button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item (click)="viewClientVisites(client.id!)">
+              <mat-icon color="info">event_note</mat-icon>
+              <span>Visites de logements</span>
+            </button>
+            <button mat-menu-item (click)="viewClientDossiers(client.id!)">
+              <mat-icon color="info">folder</mat-icon>
+              <span>Dossiers d'acquisition</span>
+            </button>
+            <mat-divider></mat-divider>
+            <button
+              mat-menu-item
+              (click)="deleteClient(client.id!)"
+              class="delete-action"
+            >
+              <mat-icon color="warn">delete</mat-icon>
+              <span class="text-warn">Supprimer</span>
+            </button>
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Sélectionner la page des clients"
+    ></mat-paginator>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+<h2 mat-dialog-title>
+  {{ isEditMode ? "Modifier la visite" : "Nouvelle visite" }}
+</h2>
+
+<form [formGroup]="visiteForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Date de visite</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="dateVisite" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="visiteForm.get('dateVisite')?.hasError('required')">
+          La date de visite est requise
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Logement</mat-label>
+        <input matInput formControlName="logementId" type="number" />
+        <mat-error *ngIf="visiteForm.get('logementId')?.hasError('required')">
+          Le logement est requis
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Observations</mat-label>
+        <textarea matInput formControlName="observations" rows="3"></textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-checkbox formControlName="interessePar">
+        Intéressé par le logement
+      </mat-checkbox>
+    </div>
+
+    <div class="form-row" *ngIf="!visiteForm.get('interessePar')?.value">
+      <mat-form-field appearance="outline">
+        <mat-label>Raison du refus</mat-label>
+        <textarea matInput formControlName="raisonRefus" rows="2"></textarea>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="onCancel()">Annuler</button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!visiteForm.valid"
+    >
+      {{ isEditMode ? "Modifier" : "Ajouter" }}
+    </button>
+  </mat-dialog-actions>
+</form>

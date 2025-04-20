@@ -1,0 +1,127 @@
+<!-- Cartes statistiques -->
+<div class="stats-cards">
+  <mat-card class="stat-card">
+    <mat-card-header>
+      <mat-card-title>Total Logements</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="stat-amount">{{ stats.totalLogements }}</div>
+      <div class="stat-trend positive">
+        <mat-icon>home</mat-icon>
+        <span>{{ stats.logementsDisponibles }} disponibles</span>
+      </div>
+      <div class="stat-details">
+        <span>Taux d'occupation: {{ stats.tauxOccupation }}%</span>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="stat-card">
+    <mat-card-header>
+      <mat-card-title>Dossiers en cours</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="stat-amount">{{ stats.dossiersEnCours }}</div>
+      <div class="stat-trend positive">
+        <mat-icon>folder</mat-icon>
+        <span>{{ stats.totalDossiers }} au total</span>
+      </div>
+      <div class="stat-details">
+        <span>{{ stats.totalClients }} clients enregistrés</span>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="stat-card">
+    <mat-card-header>
+      <mat-card-title>Total Paiements</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="stat-amount">
+        {{ stats.montantTotalPaiements | number }} FCFA
+      </div>
+      <div class="stat-trend positive">
+        <mat-icon>payment</mat-icon>
+        <span>{{ stats.totalPaiements }} transactions</span>
+      </div>
+      <div class="stat-details">
+        <span>Dernière mise à jour: {{ today | date : "short" }}</span>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Graphiques -->
+<div class="charts-section">
+  <!-- Graphique d'évolution des dossiers -->
+  <mat-card class="chart-card">
+    <mat-card-header>
+      <mat-card-title>
+        Évolution des dossiers traités
+        <mat-button-toggle-group [(value)]="selectedView">
+          <mat-button-toggle value="month">Ce mois</mat-button-toggle>
+          <mat-button-toggle value="year">Cette année</mat-button-toggle>
+        </mat-button-toggle-group>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="chart-container">
+        <ngx-charts-line-chart
+          [results]="evolutionDossiersData"
+          [gradient]="true"
+          [xAxis]="true"
+          [yAxis]="true"
+          [legend]="false"
+          [showXAxisLabel]="false"
+          [showYAxisLabel]="false"
+        >
+        </ngx-charts-line-chart>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Graphique de répartition des logements -->
+  <mat-card class="chart-card">
+    <mat-card-header>
+      <mat-card-title>
+        État des logements
+        <button mat-button color="primary">Détails</button>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="chart-container">
+        <ngx-charts-bar-vertical-2d
+          [results]="repartitionLogementsData"
+          [gradient]="true"
+          [xAxis]="true"
+          [yAxis]="true"
+          [legend]="true"
+          [showXAxisLabel]="false"
+          [showYAxisLabel]="false"
+        >
+        </ngx-charts-bar-vertical-2d>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Graphique des types de paiements -->
+  <mat-card class="chart-card">
+    <mat-card-header>
+      <mat-card-title>
+        Types de paiements
+        <button mat-button color="primary">Voir tout</button>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="chart-container">
+        <ngx-charts-pie-chart
+          [results]="typePaiementsData"
+          [gradient]="true"
+          [legend]="true"
+          [labels]="true"
+        >
+        </ngx-charts-pie-chart>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

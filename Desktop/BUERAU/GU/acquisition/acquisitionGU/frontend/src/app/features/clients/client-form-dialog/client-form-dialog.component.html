@@ -1,0 +1,351 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+
+<form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <div class="form-grid">
+      <!-- Informations personnelles -->
+      <div class="form-section">
+        <h3>Informations personnelles</h3>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nom</mat-label>
+          <input matInput formControlName="nom" required />
+          <mat-error *ngIf="clientForm.get('nom')?.hasError('required')"
+            >Le nom est requis</mat-error
+          >
+          <mat-error *ngIf="clientForm.get('nom')?.hasError('minlength')"
+            >Le nom doit contenir au moins 2 caractères</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Prénom</mat-label>
+          <input matInput formControlName="prenom" required />
+          <mat-error *ngIf="clientForm.get('prenom')?.hasError('required')"
+            >Le prénom est requis</mat-error
+          >
+          <mat-error *ngIf="clientForm.get('prenom')?.hasError('minlength')"
+            >Le prénom doit contenir au moins 2 caractères</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Date de naissance</mat-label>
+          <input
+            matInput
+            [matDatepicker]="dateNaissancePicker"
+            formControlName="date_naissance"
+            required
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="dateNaissancePicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #dateNaissancePicker></mat-datepicker>
+          <mat-error
+            *ngIf="clientForm.get('date_naissance')?.hasError('required')"
+            >La date de naissance est requise</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Lieu de naissance</mat-label>
+          <input matInput formControlName="lieu_naissance" required />
+          <mat-error
+            *ngIf="clientForm.get('lieu_naissance')?.hasError('required')"
+            >Le lieu de naissance est requis</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Sexe</mat-label>
+          <mat-select formControlName="sexe" required>
+            <mat-option *ngFor="let sexe of sexes" [value]="sexe">{{
+              sexe
+            }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="clientForm.get('sexe')?.hasError('required')"
+            >Le sexe est requis</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nationalité</mat-label>
+          <input matInput formControlName="nationalite" required />
+          <mat-error *ngIf="clientForm.get('nationalite')?.hasError('required')"
+            >La nationalité est requise</mat-error
+          >
+        </mat-form-field>
+      </div>
+
+      <!-- Informations CNI -->
+      <div class="form-section">
+        <h3>Informations CNI</h3>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Numéro CNI</mat-label>
+          <input matInput formControlName="numero_cni" required />
+          <mat-error *ngIf="clientForm.get('numero_cni')?.hasError('required')"
+            >Le numéro CNI est requis</mat-error
+          >
+          <mat-error *ngIf="clientForm.get('numero_cni')?.hasError('pattern')"
+            >Le numéro CNI doit contenir 9 chiffres</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Date de délivrance CNI</mat-label>
+          <input
+            matInput
+            [matDatepicker]="dateDelivrancePicker"
+            formControlName="date_delivrance_cni"
+            required
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="dateDelivrancePicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #dateDelivrancePicker></mat-datepicker>
+          <mat-error
+            *ngIf="clientForm.get('date_delivrance_cni')?.hasError('required')"
+            >La date de délivrance est requise</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Date d'expiration CNI</mat-label>
+          <input
+            matInput
+            [matDatepicker]="dateExpirationPicker"
+            formControlName="date_expiration_cni"
+            required
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="dateExpirationPicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #dateExpirationPicker></mat-datepicker>
+          <mat-error
+            *ngIf="clientForm.get('date_expiration_cni')?.hasError('required')"
+            >La date d'expiration est requise</mat-error
+          >
+        </mat-form-field>
+      </div>
+
+      <!-- Informations de contact -->
+      <div class="form-section">
+        <h3>Informations de contact</h3>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Adresse</mat-label>
+          <input matInput formControlName="adresse" required />
+          <mat-error *ngIf="clientForm.get('adresse')?.hasError('required')"
+            >L'adresse est requise</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Ville</mat-label>
+          <input matInput formControlName="ville" required />
+          <mat-error *ngIf="clientForm.get('ville')?.hasError('required')"
+            >La ville est requise</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Quartier</mat-label>
+          <input matInput formControlName="quartier" required />
+          <mat-error *ngIf="clientForm.get('quartier')?.hasError('required')"
+            >Le quartier est requis</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Téléphone</mat-label>
+          <input matInput formControlName="telephone" required />
+          <mat-error *ngIf="clientForm.get('telephone')?.hasError('required')"
+            >Le numéro de téléphone est requis</mat-error
+          >
+          <mat-error *ngIf="clientForm.get('telephone')?.hasError('pattern')"
+            >Le numéro doit contenir 9 chiffres et commencer par 2-9</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email" />
+          <mat-error *ngIf="clientForm.get('email')?.hasError('email')"
+            >Format d'email invalide</mat-error
+          >
+        </mat-form-field>
+      </div>
+
+      <!-- Informations professionnelles -->
+      <div class="form-section">
+        <h3>Informations professionnelles</h3>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Profession</mat-label>
+          <input matInput formControlName="profession" required />
+          <mat-error *ngIf="clientForm.get('profession')?.hasError('required')"
+            >La profession est requise</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Employeur</mat-label>
+          <input matInput formControlName="employeur" />
+        </mat-form-field>
+      </div>
+
+      <!-- Situation familiale -->
+      <div class="form-section">
+        <h3>Situation familiale</h3>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Situation matrimoniale</mat-label>
+          <mat-select formControlName="situation_matrimoniale" required>
+            <mat-option
+              *ngFor="let situation of situationsMatrimoniales"
+              [value]="situation"
+            >
+              {{ situation }}
+            </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="
+              clientForm.get('situation_matrimoniale')?.hasError('required')
+            "
+            >La situation matrimoniale est requise</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre d'enfants</mat-label>
+          <input
+            matInput
+            type="number"
+            formControlName="nombre_enfants"
+            min="0"
+            required
+          />
+          <mat-error
+            *ngIf="clientForm.get('nombre_enfants')?.hasError('required')"
+            >Le nombre d'enfants est requis</mat-error
+          >
+          <mat-error *ngIf="clientForm.get('nombre_enfants')?.hasError('min')"
+            >Le nombre d'enfants ne peut pas être négatif</mat-error
+          >
+        </mat-form-field>
+      </div>
+
+      <!-- Liste des enfants -->
+      <div
+        class="form-section enfants-section"
+        *ngIf="clientForm.get('nombre_enfants')?.value > 0"
+      >
+        <h3>Informations sur les enfants</h3>
+
+        <div formArrayName="enfants">
+          <div
+            *ngFor="let enfantForm of enfants.controls; let i = index"
+            [formGroupName]="i"
+            class="enfant-form"
+          >
+            <h4>Enfant {{ i + 1 }}</h4>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Nom</mat-label>
+              <input matInput formControlName="nom" required />
+              <mat-error *ngIf="enfantForm.get('nom')?.hasError('required')"
+                >Le nom est requis</mat-error
+              >
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Prénom</mat-label>
+              <input matInput formControlName="prenom" required />
+              <mat-error *ngIf="enfantForm.get('prenom')?.hasError('required')"
+                >Le prénom est requis</mat-error
+              >
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Date de naissance</mat-label>
+              <input
+                matInput
+                [matDatepicker]="enfantDatePicker"
+                formControlName="date_naissance"
+                required
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="enfantDatePicker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #enfantDatePicker></mat-datepicker>
+              <mat-error
+                *ngIf="enfantForm.get('date_naissance')?.hasError('required')"
+                >La date de naissance est requise</mat-error
+              >
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Sexe</mat-label>
+              <mat-select formControlName="sexe" required>
+                <mat-option *ngFor="let sexe of sexes" [value]="sexe">{{
+                  sexe
+                }}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="enfantForm.get('sexe')?.hasError('required')"
+                >Le sexe est requis</mat-error
+              >
+            </mat-form-field>
+
+            <mat-checkbox formControlName="scolarise">Scolarisé</mat-checkbox>
+
+            <mat-form-field
+              appearance="outline"
+              *ngIf="enfantForm.get('scolarise')?.value"
+            >
+              <mat-label>Niveau scolaire</mat-label>
+              <input matInput formControlName="niveau_scolaire" />
+            </mat-form-field>
+
+            <button
+              type="button"
+              mat-icon-button
+              color="warn"
+              (click)="removeEnfant(i)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          mat-stroked-button
+          color="primary"
+          (click)="addEnfant()"
+          [disabled]="enfants.length >= clientForm.get('nombre_enfants')?.value"
+        >
+          <mat-icon>add</mat-icon>
+          Ajouter un enfant
+        </button>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button type="button" mat-button (click)="onCancel()">Annuler</button>
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      [disabled]="!clientForm.valid || isLoading"
+    >
+      <mat-spinner diameter="20" *ngIf="isLoading"></mat-spinner>
+      <span *ngIf="!isLoading">{{ data?.client ? "Modifier" : "Créer" }}</span>
+    </button>
+  </mat-dialog-actions>
+</form>

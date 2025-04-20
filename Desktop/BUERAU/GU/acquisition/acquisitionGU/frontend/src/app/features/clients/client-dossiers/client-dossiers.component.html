@@ -1,0 +1,73 @@
+<div class="container">
+  <h2>Dossiers des Clients</h2>
+
+  <mat-form-field>
+    <mat-label>Filtrer</mat-label>
+    <input
+      matInput
+      (keyup)="applyFilter($event)"
+      placeholder="Ex. DOS-2024"
+      #input
+    />
+  </mat-form-field>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- Numéro de dossier Column -->
+    <ng-container matColumnDef="numero_dossier">
+      <th mat-header-cell *matHeaderCellDef>Numéro de dossier</th>
+      <td mat-cell *matCellDef="let dossier">{{ dossier.numero_dossier }}</td>
+    </ng-container>
+
+    <!-- Date de création Column -->
+    <ng-container matColumnDef="date_creation">
+      <th mat-header-cell *matHeaderCellDef>Date de création</th>
+      <td mat-cell *matCellDef="let dossier">
+        {{ dossier.date_creation | date : "dd/MM/yyyy" }}
+      </td>
+    </ng-container>
+
+    <!-- Statut Column -->
+    <ng-container matColumnDef="statut">
+      <th mat-header-cell *matHeaderCellDef>Statut</th>
+      <td mat-cell *matCellDef="let dossier">
+        <mat-chip
+          [color]="dossier.statut === 'En cours' ? 'primary' : 'accent'"
+        >
+          {{ dossier.statut }}
+        </mat-chip>
+      </td>
+    </ng-container>
+
+    <!-- Montant Column -->
+    <ng-container matColumnDef="montant">
+      <th mat-header-cell *matHeaderCellDef>Montant</th>
+      <td mat-cell *matCellDef="let dossier">
+        {{ dossier.montant | currency : "XOF" : "symbol" : "1.0-0" }}
+      </td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let dossier">
+        <button mat-icon-button color="primary" (click)="viewDossier(dossier)">
+          <mat-icon>visibility</mat-icon>
+        </button>
+        <button mat-icon-button color="accent" (click)="editDossier(dossier)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteDossier(dossier)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    aria-label="Sélectionner la page des dossiers"
+  ></mat-paginator>
+</div>

@@ -1,0 +1,305 @@
+@use '@angular/material' as mat;
+
+// Définition de la palette de couleurs personnalisée
+$primary-palette: (
+  50: #f3e5f5,
+  100: #e1bee7,
+  200: #ce93d8,
+  300: #ba68c8,
+  400: #ab47bc,
+  500: #9c27b0,
+  600: #8e24aa,
+  700: #7b1fa2,
+  800: #6a1b9a,
+  900: #4a148c,
+  contrast: (
+    50: rgba(0, 0, 0, 0.87),
+    100: rgba(0, 0, 0, 0.87),
+    200: rgba(0, 0, 0, 0.87),
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  )
+);
+
+// Création du thème personnalisé
+$my-primary: mat.define-palette($primary-palette);
+$my-accent: mat.define-palette(mat.$purple-palette, A200, A100, A400);
+$my-theme: mat.define-light-theme((
+  color: (
+    primary: $my-primary,
+    accent: $my-accent,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
+
+// Application du thème
+@include mat.all-component-themes($my-theme);
+
+// Styles globaux
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #f5f5f5;
+}
+
+// Layout principal
+.app-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  mat-sidenav-container {
+    flex: 1;
+    
+    mat-sidenav {
+      width: 250px;
+      
+      .sidebar-header {
+        padding: 16px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        
+        .logo {
+          width: 40px;
+          height: 40px;
+        }
+        
+        h2 {
+          margin: 0;
+          font-size: 1.25rem;
+          font-weight: 500;
+          color: mat.get-color-from-palette($primary-palette, 500);
+        }
+      }
+      
+      mat-nav-list {
+        a {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          height: 48px;
+          
+          mat-icon {
+            margin-right: 8px;
+          }
+          
+          &.active {
+            background-color: mat.get-color-from-palette($primary-palette, 50);
+            color: mat.get-color-from-palette($primary-palette, 500);
+          }
+        }
+      }
+    }
+    
+    mat-sidenav-content {
+      .main-content {
+        padding: 24px;
+      }
+    }
+  }
+}
+
+// Toolbar
+mat-toolbar {
+  .toolbar-spacer {
+    flex: 1 1 auto;
+  }
+  
+  .user-menu-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
+}
+
+// Menus
+.notification-menu {
+  min-width: 300px;
+  max-width: 350px;
+  
+  .notification-header {
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    h3 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+  }
+  
+  .notification-list {
+    max-height: 300px;
+    overflow-y: auto;
+    
+    .notification-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      
+      mat-icon {
+        &[color="info"] { color: #2196f3; }
+        &[color="warning"] { color: #ff9800; }
+        &[color="error"] { color: #f44336; }
+      }
+    }
+  }
+}
+
+// Classes utilitaires
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+// Styles des cartes et conteneurs
+.dashboard-container {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .stat-card {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+    .stat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+
+      h3 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 500;
+        color: rgba(0,0,0,0.7);
+      }
+
+      mat-icon {
+        color: mat.get-color-from-palette($primary-palette, 500);
+      }
+    }
+
+    .stat-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 1rem;
+
+      .stat-value {
+        font-size: 1.75rem;
+        font-weight: 600;
+        color: rgba(0,0,0,0.87);
+      }
+
+      .stat-trend {
+        font-size: 0.875rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+
+        &.positive {
+          color: #4caf50;
+        }
+
+        &.negative {
+          color: #f44336;
+        }
+      }
+    }
+
+    .stat-footer {
+      font-size: 0.875rem;
+      color: rgba(0,0,0,0.6);
+    }
+  }
+
+  .charts-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 1.5rem;
+
+    .chart-card {
+      background: white;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+      .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+
+        h3 {
+          margin: 0;
+          font-size: 1.1rem;
+          font-weight: 500;
+          color: rgba(0,0,0,0.87);
+        }
+
+        mat-form-field {
+          width: 150px;
+
+          ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+            display: none;
+          }
+        }
+      }
+
+      .chart-container {
+        height: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+}

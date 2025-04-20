@@ -1,0 +1,23 @@
+.form-row {
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-dialog-content {
+  min-width: 400px;
+  padding: 20px;
+}
+
+mat-dialog-actions {
+  padding: 16px;
+  margin-bottom: 0;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 60px;
+}

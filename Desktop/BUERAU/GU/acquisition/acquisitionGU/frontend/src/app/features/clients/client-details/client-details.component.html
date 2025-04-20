@@ -1,0 +1,146 @@
+<div class="client-details-container">
+  <mat-card *ngIf="!isLoading && client">
+    <mat-card-header>
+      <mat-card-title>Détails du client</mat-card-title>
+      <div class="header-actions">
+        <button
+          mat-icon-button
+          (click)="onBack()"
+          matTooltip="Retour à la liste"
+        >
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      </div>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Informations personnelles -->
+      <section class="details-section">
+        <h2>Informations personnelles</h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Nom</label>
+            <p>{{ client.nom }}</p>
+          </div>
+          <div class="info-item">
+            <label>Prénom</label>
+            <p>{{ client.prenom }}</p>
+          </div>
+          <div class="info-item">
+            <label>Date de naissance</label>
+            <p>{{ client.date_naissance | date : "dd/MM/yyyy" }}</p>
+          </div>
+          <div class="info-item">
+            <label>Lieu de naissance</label>
+            <p>{{ client.lieu_naissance }}</p>
+          </div>
+          <div class="info-item">
+            <label>Sexe</label>
+            <p>{{ client.sexe === "M" ? "Masculin" : "Féminin" }}</p>
+          </div>
+          <div class="info-item">
+            <label>Nationalité</label>
+            <p>{{ client.nationalite }}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pièce d'identité -->
+      <section class="details-section">
+        <h2>Pièce d'identité</h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Numéro CNI</label>
+            <p>{{ client.numero_cni }}</p>
+          </div>
+          <div class="info-item">
+            <label>Date de délivrance</label>
+            <p>{{ client.date_delivrance_cni | date : "dd/MM/yyyy" }}</p>
+          </div>
+          <div class="info-item">
+            <label>Date d'expiration</label>
+            <p>{{ client.date_expiration_cni | date : "dd/MM/yyyy" }}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Coordonnées -->
+      <section class="details-section">
+        <h2>Coordonnées</h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Adresse</label>
+            <p>{{ client.adresse }}</p>
+          </div>
+          <div class="info-item">
+            <label>Ville</label>
+            <p>{{ client.ville }}</p>
+          </div>
+          <div class="info-item">
+            <label>Quartier</label>
+            <p>{{ client.quartier }}</p>
+          </div>
+          <div class="info-item">
+            <label>Téléphone</label>
+            <p>{{ client.telephone }}</p>
+          </div>
+          <div class="info-item">
+            <label>Email</label>
+            <p>{{ client.email }}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Situation professionnelle -->
+      <section class="details-section">
+        <h2>Situation professionnelle</h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Profession</label>
+            <p>{{ client.profession }}</p>
+          </div>
+          <div class="info-item">
+            <label>Employeur</label>
+            <p>{{ client.employeur || "Non renseigné" }}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Situation familiale -->
+      <section class="details-section">
+        <h2>Situation familiale</h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Situation matrimoniale</label>
+            <p>{{ client.situation_matrimoniale }}</p>
+          </div>
+          <div class="info-item">
+            <label>Nombre d'enfants</label>
+            <p>{{ client.nombre_enfants }}</p>
+          </div>
+        </div>
+      </section>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="onEdit()">
+        <mat-icon>edit</mat-icon>
+        Modifier
+      </button>
+      <button mat-raised-button color="accent" (click)="onViewVisites()">
+        <mat-icon>event</mat-icon>
+        Voir les visites
+      </button>
+      <button mat-raised-button color="accent" (click)="onViewDossiers()">
+        <mat-icon>folder</mat-icon>
+        Voir les dossiers
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-spinner
+    *ngIf="isLoading"
+    diameter="50"
+    class="loading-spinner"
+  ></mat-spinner>
+</div>

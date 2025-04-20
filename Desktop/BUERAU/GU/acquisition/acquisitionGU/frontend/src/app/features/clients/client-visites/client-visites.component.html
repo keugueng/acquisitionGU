@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="header">
+    <h2>Visites des Clients</h2>
+    <button mat-raised-button color="primary" (click)="addVisite()">
+      <mat-icon>add</mat-icon>
+      Nouvelle visite
+    </button>
+  </div>
+
+  <mat-form-field>
+    <mat-label>Filtrer</mat-label>
+    <input
+      matInput
+      (keyup)="applyFilter($event)"
+      placeholder="Ex. John"
+      #input
+    />
+  </mat-form-field>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- Date de visite Column -->
+    <ng-container matColumnDef="dateVisite">
+      <th mat-header-cell *matHeaderCellDef>Date de visite</th>
+      <td mat-cell *matCellDef="let visite">
+        {{ visite.dateVisite | date : "dd/MM/yyyy" }}
+      </td>
+    </ng-container>
+
+    <!-- Logement Column -->
+    <ng-container matColumnDef="logementId">
+      <th mat-header-cell *matHeaderCellDef>Logement</th>
+      <td mat-cell *matCellDef="let visite">{{ visite.logementId }}</td>
+    </ng-container>
+
+    <!-- Observations Column -->
+    <ng-container matColumnDef="observations">
+      <th mat-header-cell *matHeaderCellDef>Observations</th>
+      <td mat-cell *matCellDef="let visite">{{ visite.observations }}</td>
+    </ng-container>
+
+    <!-- Intéressé par Column -->
+    <ng-container matColumnDef="interessePar">
+      <th mat-header-cell *matHeaderCellDef>Intéressé par</th>
+      <td mat-cell *matCellDef="let visite">{{ visite.interessePar }}</td>
+    </ng-container>
+
+    <!-- Raison du refus Column -->
+    <ng-container matColumnDef="raisonRefus">
+      <th mat-header-cell *matHeaderCellDef>Raison du refus</th>
+      <td mat-cell *matCellDef="let visite">{{ visite.raisonRefus }}</td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let visite">
+        <button mat-icon-button color="primary" (click)="editVisite(visite)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteVisite(visite)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    aria-label="Sélectionner la page des visites"
+  ></mat-paginator>
+</div>
