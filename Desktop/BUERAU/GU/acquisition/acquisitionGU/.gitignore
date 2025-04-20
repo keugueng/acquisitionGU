@@ -12,11 +12,12 @@
 
 # Misc
 .DS_Store
-.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+.env
+.env.backup
 
 # Logs
 npm-debug.log*
@@ -26,8 +27,8 @@ yarn-error.log*
 # IDE
 .idea/
 .vscode/
-*.swp
-*.swo
+*.sublime-project
+*.sublime-workspace
 
 # Angular
 .angular/
@@ -35,3 +36,53 @@ yarn-error.log*
 
 # System Files
 Thumbs.db
+desktop.ini
+*.lnk
+*.tmp
+*.log
+*.log1
+*.log2
+*.ini
+*.dat
+*.blf
+*.regtrans-ms
+
+# Personal files
+*.docx
+*.pdf
+*.xlsx
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.psd
+*.ai
+*.zip
+*.rar
+*.exe
+*.ppt
+*.pptx
+
+# Directories
+/AppData/
+/Cookies/
+/Local Settings/
+/Menu Démarrer/
+/Mes documents/
+/Modèles/
+/Recent/
+/SendTo/
+/Voisinage d'impression/
+/Voisinage réseau/
+/3D Objects/
+/Contacts/
+/Documents/
+/Downloads/
+/Favorites/
+/Links/
+/Music/
+/Pictures/
+/Saved Games/
+/Searches/
+/Videos/
+/OneDrive/
